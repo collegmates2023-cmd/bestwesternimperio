@@ -1,64 +1,42 @@
-# Best Western Imperio - Luxury Hotel Website PRD
+# Best Western Imperio - Luxury Hotel Website + Admin Panel PRD
 
 ## Problem Statement
-Premium luxury hotel website for "Best Western Imperio, Hisar" with dark + gold theme, modern UI, and interactive features.
+Premium luxury hotel website + admin panel for "Best Western Imperio, Hisar"
 
 ## Architecture
 - **Frontend**: React + Tailwind CSS + Shadcn UI + Framer Motion
-- **Backend**: FastAPI + MongoDB
-- **Database**: MongoDB (contacts collection)
-
-## User Personas
-- Hotel guests looking to book rooms
-- Event organizers seeking banquet info
-- Business travelers checking amenities
-
-## Core Requirements (Static)
-1. Hero section with parallax effect and booking bar
-2. About hotel section
-3. Rooms section with modal details
-4. 2D Floor plan booking UI (cinema-seat style)
-5. Amenities grid
-6. Masonry gallery with lightbox
-7. Testimonial slider
-8. Location with Google Map
-9. Contact form with MongoDB storage
-10. Mobile responsive with sticky booking button
+- **Backend**: FastAPI + MongoDB + JWT Auth (httpOnly cookies)
+- **Database**: MongoDB (users, rooms, bookings, customers, contacts, settings)
 
 ## What's Been Implemented (Feb 2026)
-- Full single-page marketing site with all 10 sections
-- Dark (#0A0A0A) + Gold (#D4AF37) theme
-- Glassmorphism navbar with scroll effect
-- Full-screen hero with slow zoom background
-- Floating booking bar (Calendar + Select pickers)
-- About section with icon highlights
-- Room cards with detail modals (image slider)
-- Interactive floor plan with 3 floors, color-coded rooms
-- Amenities grid with hover glow effects
-- Masonry gallery with lightbox dialog
-- Auto-scrolling testimonial carousel
-- Location section with dark-themed Google Map
-- Contact form (name, email, phone, message) -> MongoDB
-- Mobile responsive + sticky booking CTA
-- Backend: GET /api/rooms, GET /api/floors, POST /api/contact
+
+### Public Website (/)
+- Hero with hotel exterior image + parallax
+- Floating booking bar (Calendar/Select pickers)
+- About section, Rooms with modals, 2D Floor plan booking
+- Amenities grid, Masonry gallery with categories, Testimonials
+- Location map, Contact form (MongoDB), Mobile responsive
+
+### Admin Panel (/admin)
+- JWT auth with admin login (admin@bwimperio.com / bwimperio)
+- Dashboard with analytics cards + booking trends chart
+- Room Management (CRUD, table/grid views, filters, search)
+- Floor Layout Control (visual editor, real-time status updates)
+- Booking Management (CRUD, customer tracking)
+- Settings (hotel details management)
+- 30 rooms seeded across 3 floors
+- Changes sync between admin and public site
 
 ## Backlog
-### P0 (Critical)
-- None remaining
-
 ### P1 (Important)
-- User-provided images integration (user to supply)
-- Real booking system with payment
-- Email notifications on contact form submit
-- Admin panel for room management
+- Customer management module
+- Image upload (currently URL-based)
+- Email notifications on bookings
+- Reports export (CSV/PDF)
+- Role management (Super Admin / Staff)
 
 ### P2 (Nice to have)
-- Room availability calendar integration
-- Multi-language support
-- SEO meta tags and structured data
-- Performance optimization (image CDN, lazy loading improvements)
-
-## Next Tasks
-- Await user-provided images
-- Implement real booking flow if needed
-- Add admin dashboard for hotel management
+- Dark/light mode toggle for admin
+- Real payment integration
+- Seasonal pricing
+- Occupancy rate analytics
