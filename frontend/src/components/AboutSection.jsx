@@ -3,7 +3,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { BedDouble, UtensilsCrossed, Users, Sparkles } from "lucide-react";
 
-const ABOUT_IMG = "https://images.pexels.com/photos/3124079/pexels-photo-3124079.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
+const ABOUT_IMG = "https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/ooypb31c_bc1f036e726111e799540a4cef95d023.jpg";
 
 const highlights = [
   { icon: BedDouble, label: "27 Premium Rooms", desc: "Luxurious comfort" },

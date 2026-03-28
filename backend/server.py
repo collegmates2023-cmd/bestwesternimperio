@@ -68,9 +68,7 @@ async def get_rooms():
                 "description": "Spacious deluxe room with modern amenities, plush bedding, and a stunning city view. Perfect for business and leisure travelers seeking comfort.",
                 "amenities": ["King Bed", "City View", "WiFi", "AC", "Mini Bar", "Room Service", "Smart TV", "Rain Shower"],
                 "images": [
-                    "https://images.pexels.com/photos/6466484/pexels-photo-6466484.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-                    "https://images.unsplash.com/photo-1758448755969-8791367cf5c5?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
-                    "https://images.pexels.com/photos/3688261/pexels-photo-3688261.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    "https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/980zdopb_c0ce331a7c5311e894780266fbcf4d94.jpg"
                 ],
                 "size": "350 sq ft"
             },
@@ -81,9 +79,7 @@ async def get_rooms():
                 "description": "Premium executive suite with separate living area, luxury furnishings, and panoramic views. Designed for discerning guests who expect the finest.",
                 "amenities": ["King Bed", "Panoramic View", "WiFi", "AC", "Mini Bar", "Room Service", "Smart TV", "Bathtub", "Lounge Area", "Work Desk"],
                 "images": [
-                    "https://images.unsplash.com/photo-1759223198981-661cadbbff36?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
-                    "https://images.unsplash.com/photo-1761039265583-9489b4246454?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
-                    "https://images.pexels.com/photos/8134775/pexels-photo-8134775.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    "https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/980zdopb_c0ce331a7c5311e894780266fbcf4d94.jpg"
                 ],
                 "size": "500 sq ft"
             }

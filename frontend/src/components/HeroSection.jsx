@@ -6,7 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
 
-const HERO_IMG = "https://images.unsplash.com/photo-1766164027844-fe28a6993029?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85";
+const HERO_IMG = "https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/ooypb31c_bc1f036e726111e799540a4cef95d023.jpg";
 
 export default function HeroSection() {
   const [checkIn, setCheckIn] = useState(null);

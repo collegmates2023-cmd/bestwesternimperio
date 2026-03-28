@@ -4,58 +4,54 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
+const categories = ["All", "Hotel", "Rooms", "Restaurant", "Reception"];
+
 const galleryImages = [
   {
-    src: "https://images.pexels.com/photos/3124079/pexels-photo-3124079.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    alt: "Hotel Lobby",
+    src: "https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/ooypb31c_bc1f036e726111e799540a4cef95d023.jpg",
+    alt: "Hotel Exterior",
+    category: "Hotel",
     height: "h-80"
   },
   {
-    src: "https://images.pexels.com/photos/6466484/pexels-photo-6466484.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    src: "https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/980zdopb_c0ce331a7c5311e894780266fbcf4d94.jpg",
     alt: "Deluxe Room",
-    height: "h-64"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1759223198981-661cadbbff36?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
-    alt: "Executive Suite",
+    category: "Rooms",
     height: "h-72"
   },
   {
-    src: "https://images.unsplash.com/photo-1707589338014-cb60c7e74471?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
-    alt: "Pool Area",
-    height: "h-64"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1758448755969-8791367cf5c5?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
-    alt: "Premium Suite",
+    src: "https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/m3kgfm24_6d1ea774726111e7b345025f77df004f.jpg",
+    alt: "Restaurant & Banquet Hall",
+    category: "Restaurant",
     height: "h-80"
   },
   {
-    src: "https://images.unsplash.com/photo-1761039265583-9489b4246454?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
-    alt: "Room with Balcony",
+    src: "https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/nmgytssa_f8e3795ee2ee11eba40e0242ac110004.jfif.jpg",
+    alt: "Reception Area",
+    category: "Reception",
     height: "h-64"
   },
   {
-    src: "https://images.unsplash.com/photo-1483744724400-dd3bfb1b71ea?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
-    alt: "Poolside Dining",
-    height: "h-72"
-  },
-  {
-    src: "https://images.pexels.com/photos/10880468/pexels-photo-10880468.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    alt: "Hotel Night View",
+    src: "https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/n7wlzppe_4c596542726111e78394025f77df004f.jpg",
+    alt: "Lobby & Art Decor",
+    category: "Reception",
     height: "h-80"
-  },
-  {
-    src: "https://images.pexels.com/photos/3688261/pexels-photo-3688261.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    alt: "Twin Bedroom",
-    height: "h-64"
   },
 ];
 
 export default function GallerySection() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [activeCategory, setActiveCategory] = useState("All");
 
-  const openLightbox = (index) => setLightboxIndex(index);
+  const filteredImages = activeCategory === "All"
+    ? galleryImages
+    : galleryImages.filter((img) => img.category === activeCategory);
+
+  const openLightbox = (index) => {
+    // Find the actual index in the full array for lightbox navigation
+    const actualIndex = galleryImages.indexOf(filteredImages[index]);
+    setLightboxIndex(actualIndex);
+  };
   const closeLightbox = () => setLightboxIndex(null);
   const nextImage = () => setLightboxIndex((prev) => (prev + 1) % galleryImages.length);
   const prevImage = () => setLightboxIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
@@ -75,8 +71,26 @@ export default function GallerySection() {
           </h2>
         </motion.div>
 
+        {/* Category Filter */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              data-testid={`gallery-filter-${cat.toLowerCase()}`}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-5 py-2 text-xs uppercase tracking-widest transition-all duration-300 border ${
+                activeCategory === cat
+                  ? "bg-[#D4AF37] text-black border-[#D4AF37] font-semibold"
+                  : "bg-transparent text-neutral-400 border-[#262626] hover:border-[#D4AF37]/50 hover:text-white"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
         <div className="masonry-grid">
-          {galleryImages.map((img, i) => (
+          {filteredImages.map((img, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -94,7 +108,10 @@ export default function GallerySection() {
                   className={`w-full ${img.height} object-cover group-hover:scale-105 transition-transform duration-700`}
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-500 flex items-end p-4">
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-500 flex flex-col items-start justify-end p-4">
+                  <span className="text-[#D4AF37] text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-500 mb-1">
+                    {img.category}
+                  </span>
                   <span className="text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-y-2 group-hover:translate-y-0">
                     {img.alt}
                   </span>

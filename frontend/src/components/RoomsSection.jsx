@@ -33,14 +33,14 @@ export default function RoomsSection() {
             id: "deluxe", name: "Deluxe Room", price: 4500,
             description: "Spacious deluxe room with modern amenities.",
             amenities: ["King Bed", "WiFi", "AC", "Mini Bar", "Smart TV", "Rain Shower"],
-            images: ["https://images.pexels.com/photos/6466484/pexels-photo-6466484.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"],
+            images: ["https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/980zdopb_c0ce331a7c5311e894780266fbcf4d94.jpg"],
             size: "350 sq ft"
           },
           {
             id: "executive", name: "Executive Room", price: 6500,
             description: "Premium executive suite with separate living area.",
             amenities: ["King Bed", "WiFi", "AC", "Mini Bar", "Smart TV", "Bathtub", "Lounge Area"],
-            images: ["https://images.unsplash.com/photo-1759223198981-661cadbbff36?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85"],
+            images: ["https://customer-assets.emergentagent.com/job_imperio-luxury/artifacts/980zdopb_c0ce331a7c5311e894780266fbcf4d94.jpg"],
             size: "500 sq ft"
           }
         ]);
