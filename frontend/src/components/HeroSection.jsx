@@ -94,7 +94,7 @@ export default function HeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1.2 }}
         data-testid="booking-bar"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 w-[92%] max-w-5xl hidden md:block"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-5xl hidden md:block"
       >
         <div className="backdrop-blur-2xl bg-[#0A0A0A]/80 border border-white/10 p-6 flex flex-col lg:flex-row gap-4 items-end justify-between shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
           {/* Check-in */}
@@ -199,11 +199,11 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator - hidden on desktop where booking bar shows */}
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-4 md:bottom-32 z-20"
+        className="absolute bottom-4 z-10 md:hidden pointer-events-none"
       >
         <ChevronDown size={24} className="text-[#D4AF37]/60" />
       </motion.div>
