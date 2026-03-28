@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Menu, X, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -12,6 +13,7 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -64,7 +66,16 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex items-center gap-4">
+          <button
+            data-testid="nav-admin-btn"
+            onClick={() => navigate("/admin")}
+            className="flex items-center gap-1.5 text-xs tracking-[0.1em] uppercase text-neutral-400 hover:text-[#D4AF37] transition-colors duration-300"
+            style={{ fontFamily: "'Outfit', sans-serif" }}
+          >
+            <ShieldCheck size={14} />
+            Admin
+          </button>
           <button
             data-testid="nav-book-now-btn"
             onClick={() => scrollTo("#booking")}
@@ -102,9 +113,16 @@ export default function Navbar() {
               </button>
             ))}
             <button
+              data-testid="mobile-admin-btn"
+              onClick={() => { setMobileOpen(false); navigate("/admin"); }}
+              className="mt-4 w-full flex items-center justify-center gap-2 border border-[#D4AF37] text-[#D4AF37] py-3 text-xs uppercase tracking-widest font-semibold"
+            >
+              <ShieldCheck size={14} /> Admin Panel
+            </button>
+            <button
               data-testid="mobile-book-now-btn"
               onClick={() => scrollTo("#booking")}
-              className="mt-4 w-full bg-[#D4AF37] text-black py-3 text-xs uppercase tracking-widest font-semibold"
+              className="mt-2 w-full bg-[#D4AF37] text-black py-3 text-xs uppercase tracking-widest font-semibold"
             >
               Book Now
             </button>

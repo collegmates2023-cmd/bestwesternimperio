@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Phone, Mail, MapPin, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
 
@@ -14,6 +15,7 @@ const quickLinks = [
 ];
 
 export default function Footer() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [loading, setLoading] = useState(false);
 
@@ -165,9 +167,18 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-[#262626] py-6">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-neutral-600">
-            {new Date().getFullYear()} Best Western Imperio, Hisar. All rights reserved.
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-xs text-neutral-600">
+              {new Date().getFullYear()} Best Western Imperio, Hisar. All rights reserved.
+            </p>
+            <button
+              data-testid="footer-admin-link"
+              onClick={() => navigate("/admin")}
+              className="flex items-center gap-1.5 text-xs text-neutral-600 hover:text-[#D4AF37] transition-colors tracking-widest uppercase"
+            >
+              <ShieldCheck size={12} /> Admin
+            </button>
+          </div>
           <div className="flex gap-6">
             {["facebook", "instagram", "twitter"].map((social) => (
               <a
