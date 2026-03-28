@@ -6,67 +6,119 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
-from typing import List
+from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
-
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
 app = FastAPI()
-
-# Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
 
-# Define Models
-class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
-    
+class ContactForm(BaseModel):
+    model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    name: str
+    email: str
+    phone: Optional[str] = None
+    message: str
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
-class StatusCheckCreate(BaseModel):
-    client_name: str
 
-# Add your routes to the router instead of directly to app
+class ContactFormCreate(BaseModel):
+    name: str
+    email: str
+    phone: Optional[str] = None
+    message: str
+
+
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Best Western Imperio API"}
 
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.model_dump()
-    status_obj = StatusCheck(**status_dict)
-    
-    # Convert to dict and serialize datetime to ISO string for MongoDB
-    doc = status_obj.model_dump()
-    doc['timestamp'] = doc['timestamp'].isoformat()
-    
-    _ = await db.status_checks.insert_one(doc)
-    return status_obj
 
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    # Exclude MongoDB's _id field from the query results
-    status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
-    
-    # Convert ISO string timestamps back to datetime objects
-    for check in status_checks:
-        if isinstance(check['timestamp'], str):
-            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
-    
-    return status_checks
+@api_router.post("/contact", response_model=ContactForm)
+async def create_contact(input_data: ContactFormCreate):
+    contact = ContactForm(**input_data.model_dump())
+    doc = contact.model_dump()
+    await db.contacts.insert_one(doc)
+    return contact
 
-# Include the router in the main app
+
+@api_router.get("/contacts", response_model=List[ContactForm])
+async def get_contacts():
+    contacts = await db.contacts.find({}, {"_id": 0}).to_list(100)
+    return contacts
+
+
+@api_router.get("/rooms")
+async def get_rooms():
+    return {
+        "rooms": [
+            {
+                "id": "deluxe",
+                "name": "Deluxe Room",
+                "price": 4500,
+                "description": "Spacious deluxe room with modern amenities, plush bedding, and a stunning city view. Perfect for business and leisure travelers seeking comfort.",
+                "amenities": ["King Bed", "City View", "WiFi", "AC", "Mini Bar", "Room Service", "Smart TV", "Rain Shower"],
+                "images": [
+                    "https://images.pexels.com/photos/6466484/pexels-photo-6466484.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                    "https://images.unsplash.com/photo-1758448755969-8791367cf5c5?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
+                    "https://images.pexels.com/photos/3688261/pexels-photo-3688261.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                ],
+                "size": "350 sq ft"
+            },
+            {
+                "id": "executive",
+                "name": "Executive Room",
+                "price": 6500,
+                "description": "Premium executive suite with separate living area, luxury furnishings, and panoramic views. Designed for discerning guests who expect the finest.",
+                "amenities": ["King Bed", "Panoramic View", "WiFi", "AC", "Mini Bar", "Room Service", "Smart TV", "Bathtub", "Lounge Area", "Work Desk"],
+                "images": [
+                    "https://images.unsplash.com/photo-1759223198981-661cadbbff36?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
+                    "https://images.unsplash.com/photo-1761039265583-9489b4246454?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85",
+                    "https://images.pexels.com/photos/8134775/pexels-photo-8134775.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                ],
+                "size": "500 sq ft"
+            }
+        ]
+    }
+
+
+@api_router.get("/floors")
+async def get_floors():
+    floors = []
+    for floor_num in range(1, 4):
+        rooms = []
+        for i in range(1, 11):
+            room_num = floor_num * 100 + i
+            import random
+            random.seed(room_num)
+            statuses = ["available", "available", "available", "booked", "maintenance"]
+            status = random.choice(statuses)
+            room_type = "Executive" if i <= 3 else "Deluxe"
+            price = 6500 if room_type == "Executive" else 4500
+            rooms.append({
+                "number": room_num,
+                "status": status,
+                "type": room_type,
+                "price": price,
+                "side": "left" if i <= 5 else "right"
+            })
+        floors.append({
+            "floor": floor_num,
+            "label": f"Floor {floor_num}",
+            "rooms": rooms
+        })
+    return {"floors": floors}
+
+
 app.include_router(api_router)
 
 app.add_middleware(
@@ -77,12 +129,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
