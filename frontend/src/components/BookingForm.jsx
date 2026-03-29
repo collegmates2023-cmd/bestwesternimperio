@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '@/config/api';
+import { handleApiError, showSuccess } from '@/utils/toast';
 import './BookingForm.css';
 
 const BookingForm = ({ room, checkIn, checkOut, onBookingSubmit, onClose }) => {
@@ -56,7 +57,7 @@ const BookingForm = ({ room, checkIn, checkOut, onBookingSubmit, onClose }) => {
     try {
       const bookingData = {
         room_number: room.room_number,
-        room_id: room.id,
+        room_id: room.id || room._id,
         check_in: checkIn,
         check_out: checkOut,
         customer_name: formData.customer_name,
@@ -66,20 +67,28 @@ const BookingForm = ({ room, checkIn, checkOut, onBookingSubmit, onClose }) => {
         total_price: room.price,
       };
 
+      console.log('📤 Booking Data:', bookingData);
       const response = await api.post('/api/bookings', bookingData);
       const data = response.data;
       
+      console.log('✅ Booking Response:', data);
+      
       if (!data || !data.success) {
-        throw new Error(data?.detail || 'Failed to create booking');
+        throw new Error(data?.detail || data?.message || 'Failed to create booking');
       }
+      
       setSuccess(true);
+      showSuccess('Booking confirmed!', `Room ${room.room_number} has been successfully booked.`);
 
       // Call callback after 2 seconds
       setTimeout(() => {
         onBookingSubmit(data.booking);
       }, 1500);
     } catch (err) {
-      setError(err.message || 'An error occurred while booking');
+      console.error('❌ Booking Error:', err);
+      const errorMsg = err.response?.data?.detail || err.message || 'An error occurred while booking';
+      setError(errorMsg);
+      handleApiError(err, errorMsg);
     } finally {
       setLoading(false);
     }

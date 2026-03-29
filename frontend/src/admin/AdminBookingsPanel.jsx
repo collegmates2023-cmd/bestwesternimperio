@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '@/config/api';
+import { handleApiError, showSuccess } from '@/utils/toast';
 import './AdminPanel.css';
 
 const AdminBookingsPanel = () => {
@@ -22,9 +23,10 @@ const AdminBookingsPanel = () => {
       if (searchTerm) params.search = searchTerm;
 
       const response = await api.get('/api/admin/bookings', { params });
-      setBookings(response.data);
+      setBookings(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
-      setError(err.message);
+      handleApiError(err, 'Failed to load bookings');
+      setError('Failed to load bookings');
     } finally {
       setLoading(false);
     }
@@ -35,18 +37,20 @@ const AdminBookingsPanel = () => {
 
     try {
       await api.put(`/api/bookings/${bookingId}/cancel`);
+      showSuccess('Booking cancelled successfully');
       fetchBookings();
     } catch (err) {
-      setError(err.message);
+      handleApiError(err, 'Failed to cancel booking');
     }
   };
 
   const handleStatusUpdate = async (bookingId, newStatus) => {
     try {
       await api.put(`/api/admin/bookings/${bookingId}`, { status: newStatus });
+      showSuccess(`Booking status updated to ${newStatus}`);
       fetchBookings();
     } catch (err) {
-      setError(err.message);
+      handleApiError(err, 'Failed to update booking status');
     }
   };
 

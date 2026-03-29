@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '@/config/api';
+import { handleApiError, showSuccess } from '@/utils/toast';
 import './AdminPanel.css';
 
 const AdminRoomsPanel = () => {
@@ -33,9 +34,10 @@ const AdminRoomsPanel = () => {
       if (filterCategory) params.category = filterCategory;
 
       const response = await api.get('/api/admin/rooms', { params });
-      setRooms(response.data);
+      setRooms(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
-      setError(err.message);
+      handleApiError(err, 'Failed to load rooms');
+      setError('Failed to load rooms');
     } finally {
       setLoading(false);
     }
@@ -57,6 +59,7 @@ const AdminRoomsPanel = () => {
         amenities: formData.amenities.split(',').map((a) => a.trim()),
       });
 
+      showSuccess('Room added successfully');
       setShowAddForm(false);
       setFormData({
         room_number: '',
@@ -68,16 +71,17 @@ const AdminRoomsPanel = () => {
       });
       fetchRooms();
     } catch (err) {
-      setError(err.message);
+      handleApiError(err, 'Failed to add room');
     }
   };
 
   const handleStatusChange = async (roomId, newStatus) => {
     try {
       await api.put(`/api/admin/rooms/${roomId}/status`, { status: newStatus });
+      showSuccess('Room status updated');
       fetchRooms();
     } catch (err) {
-      setError(err.message);
+      handleApiError(err, 'Failed to update room status');
     }
   };
 
@@ -86,9 +90,10 @@ const AdminRoomsPanel = () => {
 
     try {
       await api.delete(`/api/admin/rooms/${roomId}`);
+      showSuccess('Room deleted successfully');
       fetchRooms();
     } catch (err) {
-      setError(err.message);
+      handleApiError(err, 'Failed to delete room');
     }
   };
 
@@ -103,6 +108,8 @@ const AdminRoomsPanel = () => {
           + Add New Room
         </button>
       </div>
+
+      {error && <div className="error-message">{error}</div>}
 
       {showAddForm && (
         <form onSubmit={handleAddRoom} className="add-room-form">

@@ -1,29 +1,51 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { setToken, removeToken, getToken } from "@/utils/auth";
 
 const AuthContext = createContext(null);
-<<<<<<< HEAD
 
-// API URL with fallback - CRITICAL: Must have fallback if env var is undefined
-const API = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+// API URL with fallback
+const API = process.env.REACT_APP_BACKEND_URL || 'https://bestwesternimperio-1.onrender.com';
 
 console.log('🔐 AuthContext: API URL =', API);
-=======
-const API = process.env.REACT_APP_BACKEND_URL;
->>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
 
-const adminApi = axios.create({ baseURL: API, withCredentials: true });
+// Create axios instance with credentials support
+const adminApi = axios.create({ 
+  baseURL: API, 
+  withCredentials: true,
+  timeout: 15000 
+});
 
-// Add interceptor to handle token refresh
+// Add interceptor to attach token to requests
+adminApi.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Add interceptor to handle token refresh on 401
 adminApi.interceptors.response.use(
   (res) => res,
   async (error) => {
     if (error.response?.status === 401 && !error.config._retry) {
       error.config._retry = true;
       try {
-        await axios.post(`${API}/api/auth/refresh`, {}, { withCredentials: true });
+        console.log('🔄 Attempting token refresh...');
+        const refreshRes = await axios.post(`${API}/api/auth/refresh`, {}, { withCredentials: true });
+        if (refreshRes.data?.token) {
+          setToken(refreshRes.data.token);
+        }
+        // Attach the new token and retry
+        const token = getToken();
+        if (token) {
+          error.config.headers.Authorization = `Bearer ${token}`;
+        }
         return adminApi(error.config);
-      } catch {
+      } catch (refreshErr) {
+        console.error('❌ Token refresh failed:', refreshErr.message);
+        removeToken();
         return Promise.reject(error);
       }
     }
@@ -32,38 +54,39 @@ adminApi.interceptors.response.use(
 );
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null); // null=checking, false=not auth
+  const [user, setUser] = useState(null); // null=checking, false=not auth, {}=authenticated
   const [loading, setLoading] = useState(true);
 
   const checkAuth = useCallback(async () => {
     try {
-<<<<<<< HEAD
       console.log('🔍 Checking authentication...');
       const { data } = await adminApi.get("/api/auth/me");
       console.log('✅ User authenticated:', data);
       setUser(data);
     } catch (err) {
       console.log('❌ Not authenticated:', err.message);
-=======
-      const { data } = await adminApi.get("/api/auth/me");
-      setUser(data);
-    } catch {
->>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
       setUser(false);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  useEffect(() => { checkAuth(); }, [checkAuth]);
+  useEffect(() => { 
+    checkAuth(); 
+  }, [checkAuth]);
 
   const login = async (email, password) => {
-<<<<<<< HEAD
     try {
       console.log('🔑 Logging in as:', email);
       console.log('📡 Calling:', `${API}/api/auth/login`);
       const { data } = await adminApi.post("/api/auth/login", { email, password });
       console.log('✅ Login successful!', data);
+      
+      // Save token to localStorage
+      if (data.token) {
+        setToken(data.token);
+      }
+      
       setUser(data);
       return data;
     } catch (err) {
@@ -81,21 +104,13 @@ export function AuthProvider({ children }) {
       console.log('🚪 Logging out...');
       await adminApi.post("/api/auth/logout");
       console.log('✅ Logout successful');
+      removeToken();
       setUser(false);
     } catch (err) {
       console.error('❌ Logout failed:', err.message);
+      removeToken();
       setUser(false);
     }
-=======
-    const { data } = await adminApi.post("/api/auth/login", { email, password });
-    setUser(data);
-    return data;
-  };
-
-  const logout = async () => {
-    await adminApi.post("/api/auth/logout");
-    setUser(false);
->>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
   };
 
   return (
