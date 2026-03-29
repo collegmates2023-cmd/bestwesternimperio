@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@jridgewell/trace-mapping": "^0.3.31",
+    "date-fns": "^3.6.0"
+  }
+}

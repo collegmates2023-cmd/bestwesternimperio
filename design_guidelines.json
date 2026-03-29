@@ -1,0 +1,146 @@
+{
+  "project_name": "Best Western Imperio - Luxury Hotel",
+  "theme": "dark",
+  "archetype": "5 (Jewel & Luxury)",
+  "emotional_tone": "Cinematic, moody, expensive, royal, serene",
+  "colors": {
+    "background": {
+      "base": "#0A0A0A",
+      "surface": "#141414",
+      "surface_elevated": "#1A1A1A"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "#A3A3A3",
+      "muted": "#737373"
+    },
+    "accent": {
+      "gold_primary": "#D4AF37",
+      "gold_light": "#FDE047",
+      "gold_dark": "#B48E2D",
+      "border": "#262626"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "headings": "'Playfair Display', serif",
+      "body": "'Outfit', sans-serif"
+    },
+    "rules": {
+      "h1": "text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-none text-white",
+      "h2": "text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-white",
+      "h3": "text-2xl md:text-3xl font-medium text-white",
+      "body": "text-base md:text-lg font-light text-neutral-400 leading-relaxed",
+      "overline": "text-xs md:text-sm uppercase tracking-[0.2em] text-[#D4AF37] font-semibold"
+    },
+    "imports": [
+      "@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');"
+    ]
+  },
+  "layout_and_spacing": {
+    "container": "max-w-7xl mx-auto px-6 md:px-12 lg:px-24",
+    "section_padding": "py-24 md:py-32",
+    "bento_grid": "grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8",
+    "surface_styles": {
+      "glassmorphism": "backdrop-blur-xl bg-black/40 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]",
+      "solid_card": "bg-[#141414] border border-[#262626] rounded-none hover:border-[#D4AF37]/50 transition-colors duration-500"
+    }
+  },
+  "components": {
+    "navbar": {
+      "style": "fixed top-0 w-full z-50 transition-all duration-300",
+      "background": "backdrop-blur-xl bg-black/40 border-b border-white/10",
+      "links": "text-sm tracking-widest uppercase text-white hover:text-[#D4AF37] transition-colors"
+    },
+    "hero": {
+      "layout": "min-h-screen relative flex items-center justify-center overflow-hidden",
+      "parallax_bg": "absolute inset-0 z-0 scale-105",
+      "overlay": "absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-[#0A0A0A] z-10",
+      "content": "relative z-20 text-center flex flex-col items-center gap-6 mt-20"
+    },
+    "floating_booking_bar": {
+      "layout": "absolute bottom-10 left-1/2 -translate-x-1/2 z-30 w-[90%] max-w-5xl",
+      "style": "backdrop-blur-2xl bg-[#0A0A0A]/80 border border-white/10 p-4 md:p-6 rounded-none flex flex-col md:flex-row gap-4 items-center justify-between",
+      "inputs": "bg-transparent border-b border-white/20 text-white focus:border-[#D4AF37] focus:ring-0 rounded-none w-full"
+    },
+    "buttons": {
+      "primary": "bg-[#D4AF37] text-black px-8 py-4 text-sm uppercase tracking-widest font-semibold hover:bg-[#FDE047] transition-all duration-300",
+      "outline": "border border-[#D4AF37] text-[#D4AF37] px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#D4AF37] hover:text-black transition-all duration-300"
+    },
+    "2d_floor_booking": {
+      "style": "bg-[#141414] border border-[#262626] p-8",
+      "grid": "grid grid-cols-4 md:grid-cols-8 gap-4",
+      "room_seat": "aspect-square border border-white/20 flex items-center justify-center text-xs cursor-pointer hover:border-[#D4AF37] transition-all",
+      "room_seat_booked": "bg-[#262626] text-neutral-600 cursor-not-allowed border-none",
+      "room_seat_selected": "bg-[#D4AF37] text-black border-[#D4AF37]"
+    },
+    "shadcn_usage": [
+      "Dialog (for Room detail modals and Gallery lightbox)",
+      "Calendar & Popover (for Check-in/Check-out in Booking Bar)",
+      "Select (for Guests/Rooms quantity)",
+      "Carousel (for Testimonials)"
+    ]
+  },
+  "media": {
+    "images": [
+      {
+        "category": "hero",
+        "url": "https://images.unsplash.com/photo-1766164027844-fe28a6993029?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzV8MHwxfHNlYXJjaHw0fHxsdXh1cnklMjBob3RlbCUyMGV4dGVyaW9yJTIwbmlnaHR8ZW58MHx8fHwxNzc0NjcxOTQ0fDA&ixlib=rb-4.1.0&q=85",
+        "alt": "Best Western Imperio Hotel Exterior Night",
+        "usage": "Main hero background with parallax effect"
+      },
+      {
+        "category": "about",
+        "url": "https://images.pexels.com/photos/3124079/pexels-photo-3124079.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Luxury Hotel Lobby Marble",
+        "usage": "About section bento grid main image"
+      },
+      {
+        "category": "room_suite",
+        "url": "https://images.unsplash.com/photo-1759223198981-661cadbbff36?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzF8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBob3RlbCUyMHJvb20lMjBzdWl0ZXxlbnwwfHx8fDE3NzQ2NzE5NDV8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "Presidential Suite",
+        "usage": "Rooms section - Presidential Suite card"
+      },
+      {
+        "category": "room_deluxe",
+        "url": "https://images.pexels.com/photos/6466484/pexels-photo-6466484.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Deluxe Room",
+        "usage": "Rooms section - Deluxe Room card"
+      },
+      {
+        "category": "gallery_dining",
+        "url": "https://images.pexels.com/photos/34723813/pexels-photo-34723813.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Fine Dining Restaurant",
+        "usage": "Masonry gallery item"
+      },
+      {
+        "category": "gallery_spa",
+        "url": "https://images.pexels.com/photos/7222166/pexels-photo-7222166.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Luxury Indoor Spa",
+        "usage": "Masonry gallery item"
+      }
+    ]
+  },
+  "animations": {
+    "scroll": "Use Lenis for smooth momentum scrolling. This is MANDATORY for the luxury feel.",
+    "parallax": "Framer Motion useTransform to map scrollY to y position of hero background.",
+    "reveal": "Fade in and slide up (y: 20 -> 0) with opacity 0 -> 1 for text and images as they enter viewport.",
+    "hover": "Images in masonry gallery and room cards should slightly scale up (scale: 1.05) with extended transition durations (duration-700) and an overlay fade out."
+  },
+  "accessibility": {
+    "contrast": "Ensure white text over images has sufficient text-shadow or a dark gradient overlay underneath.",
+    "testing": "All interactive elements (buttons, inputs, select triggers, booking seats) MUST include descriptive data-testid attributes."
+  },
+  "instructions_to_main_agent": [
+    "1. Initialize a pure dark theme. DO NOT use Shadcn's default Vercel aesthetic. Override radii to 'rounded-none' or max 'rounded-sm' for a sharp, architectural luxury feel.",
+    "2. Use the imported Google fonts: Playfair Display for all Headings, Outfit for Body and standard UI text.",
+    "3. Build the floating booking bar utilizing Shadcn Popover + Calendar for dates, and Select for guests. Wrap it in a glassmorphism container.",
+    "4. For the 2D Floor Booking UI: Create a schematic/grid view of rooms (like a cinema seat selector). Use simple borders, dark background, and gold highlights for selected states.",
+    "5. Use Framer Motion for entrance animations and parallax in the hero.",
+    "6. For the Masonry Gallery: Create a column-based layout with varying heights. Clicking an image should open it in a Shadcn Dialog (Lightbox).",
+    "7. Install and utilize @phosphor-icons/react for thin, elegant icons in the Amenities section.",
+    "8. Strictly enforce data-testid attributes on all interactive elements.",
+    "9. Ensure the Navbar uses glassmorphism and changes background opacity on scroll.",
+    "10. Build the Footer with massive typography for the brand name ('BEST WESTERN IMPERIO') and highly organized link columns."
+  ]
+}

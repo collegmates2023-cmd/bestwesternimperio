@@ -1,0 +1,259 @@
+.floor-container {
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.error-banner {
+  background: #ff6b6b;
+  color: white;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loading-skeleton {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.floor-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.floor-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.floor-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+.floor-label h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.room-count {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+  background: #f0f0f0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.room-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.room-card:hover:not(.booked) {
+  border-color: #667eea;
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+.room-card.selected {
+  border-color: #667eea;
+  background: #f0f3ff;
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.25);
+}
+
+.room-card.booked {
+  border-color: #ddd;
+  background: #f5f5f5;
+}
+
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.room-number {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.status-badge {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.status-badge.available {
+  background: #d4f4dd;
+  color: #2a5f3f;
+}
+
+.status-badge.booked {
+  background: #ffd4d4;
+  color: #5f2a2a;
+}
+
+.room-details {
+  flex: 1;
+}
+
+.room-type {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.room-price {
+  margin: 0.25rem 0 0 0;
+  font-size: 1.1rem;
+  color: #667eea;
+  font-weight: 600;
+}
+
+.select-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.select-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.select-button:active {
+  transform: translateY(0);
+}
+
+.selection-info {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #d4f4dd 0%, #e8f5e9 100%);
+  border-left: 4px solid #2a5f3f;
+  border-radius: 6px;
+}
+
+.info-content h4 {
+  margin: 0 0 0.5rem 0;
+  color: #2a5f3f;
+  font-size: 1.1rem;
+}
+
+.info-content p {
+  margin: 0.25rem 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.amenities {
+  margin-top: 0.75rem !important;
+  color: #666;
+  font-size: 0.9rem !important;
+}
+
+.legend {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.legend-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 2px solid #ddd;
+}
+
+.legend-box.available {
+  background: #4caf50;
+  border-color: #45a049;
+}
+
+.legend-box.booked {
+  background: #f44336;
+  border-color: #da190b;
+}
+
+.legend-box.maintenance {
+  background: #9e9e9e;
+  border-color: #757575;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .floor-container {
+    padding: 1rem;
+  }
+
+  .rooms-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .room-card {
+    padding: 0.75rem;
+  }
+
+  .legend {
+    gap: 1rem;
+  }
+}

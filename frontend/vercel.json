@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npm run build",
+  "env": {
+    "REACT_APP_BACKEND_URL": "@react_app_backend_url"
+  },
+  "regions": ["iad1"],
+  "nodeVersion": "18.x"
+}
