@@ -2,11 +2,15 @@ import { createContext, useContext, useState, useEffect, useCallback } from "rea
 import axios from "axios";
 
 const AuthContext = createContext(null);
+<<<<<<< HEAD
 
 // API URL with fallback - CRITICAL: Must have fallback if env var is undefined
 const API = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
 console.log('🔐 AuthContext: API URL =', API);
+=======
+const API = process.env.REACT_APP_BACKEND_URL;
+>>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
 
 const adminApi = axios.create({ baseURL: API, withCredentials: true });
 
@@ -33,12 +37,18 @@ export function AuthProvider({ children }) {
 
   const checkAuth = useCallback(async () => {
     try {
+<<<<<<< HEAD
       console.log('🔍 Checking authentication...');
       const { data } = await adminApi.get("/api/auth/me");
       console.log('✅ User authenticated:', data);
       setUser(data);
     } catch (err) {
       console.log('❌ Not authenticated:', err.message);
+=======
+      const { data } = await adminApi.get("/api/auth/me");
+      setUser(data);
+    } catch {
+>>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
       setUser(false);
     } finally {
       setLoading(false);
@@ -48,6 +58,7 @@ export function AuthProvider({ children }) {
   useEffect(() => { checkAuth(); }, [checkAuth]);
 
   const login = async (email, password) => {
+<<<<<<< HEAD
     try {
       console.log('🔑 Logging in as:', email);
       console.log('📡 Calling:', `${API}/api/auth/login`);
@@ -75,6 +86,16 @@ export function AuthProvider({ children }) {
       console.error('❌ Logout failed:', err.message);
       setUser(false);
     }
+=======
+    const { data } = await adminApi.post("/api/auth/login", { email, password });
+    setUser(data);
+    return data;
+  };
+
+  const logout = async () => {
+    await adminApi.post("/api/auth/logout");
+    setUser(false);
+>>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
   };
 
   return (

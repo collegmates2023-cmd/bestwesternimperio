@@ -15,7 +15,11 @@ import TestimonialSection from "@/components/TestimonialSection";
 import LocationSection from "@/components/LocationSection";
 import Footer from "@/components/Footer";
 
+<<<<<<< HEAD
 // Admin pages & Route Protection
+=======
+// Admin pages
+>>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
 import AdminLogin from "@/pages/admin/AdminLogin";
 import AdminLayout from "@/pages/admin/AdminLayout";
 import Dashboard from "@/pages/admin/Dashboard";
@@ -23,7 +27,10 @@ import RoomManagement from "@/pages/admin/RoomManagement";
 import FloorLayout from "@/pages/admin/FloorLayout";
 import BookingManagement from "@/pages/admin/BookingManagement";
 import SettingsPage from "@/pages/admin/Settings";
+<<<<<<< HEAD
 import ProtectedRoute from "@/components/ProtectedRoute";
+=======
+>>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
 
 function PublicSite() {
   return (
@@ -63,10 +70,14 @@ function App() {
           <Routes>
             <Route path="/" element={<PublicSite />} />
             <Route path="/admin/login" element={<AdminLogin />} />
+<<<<<<< HEAD
             <Route 
               path="/admin" 
               element={<ProtectedRoute element={<AdminLayout />} />}
             >
+=======
+            <Route path="/admin" element={<AdminLayout />}>
+>>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
               <Route index element={<Navigate to="/admin/dashboard" replace />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="rooms" element={<RoomManagement />} />

@@ -2,7 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Phone, Mail, MapPin, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
+<<<<<<< HEAD
 import api from "@/config/api";
+=======
+import axios from "axios";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+>>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
 
 const quickLinks = [
   { label: "Home", href: "#home" },
@@ -30,7 +36,11 @@ export default function Footer() {
     }
     setLoading(true);
     try {
+<<<<<<< HEAD
       await api.post('/api/contact', form);
+=======
+      await axios.post(`${BACKEND_URL}/api/contact`, form);
+>>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
       toast.success("Message sent successfully! We'll get back to you soon.");
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch {
