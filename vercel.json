@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "public": false,
+  "framework": "create-react-app",
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/build",
   "env": {
-    "REACT_APP_BACKEND_URL": "https://bestwesternimperio-1.onrender.com"
-  }
+    "REACT_APP_BACKEND_URL": "@react_app_backend_url"
+  },
+  "envPrefix": "REACT_APP_"
 }
