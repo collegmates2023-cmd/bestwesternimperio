@@ -1,16 +1,29 @@
 {
   "version": 2,
-  "buildCommand": "npm run build --prefix frontend",
-  "outputDirectory": "frontend/build",
-  "headers": [
+  "buildsetting": "frontend",
+  "builds": [
     {
-      "source": "/static/(.*)",
-      "headers": [
-        {
-          "key": "cache-control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build",
+        "cleanUrls": true,
+        "trailingSlash": false
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*?\\..*)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
