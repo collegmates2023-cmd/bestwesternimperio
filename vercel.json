@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "buildsetting": "frontend",
   "builds": [
     {
       "src": "frontend/package.json",
