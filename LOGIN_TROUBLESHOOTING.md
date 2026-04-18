@@ -115,7 +115,8 @@ Test the API directly:
 
 ```bash
 # Test login endpoint
-curl -X POST http://localhost:8000/api/auth/login \
+curl -X POST process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"admin@bwimperio.com","password":"bwimperio"}'
 ```

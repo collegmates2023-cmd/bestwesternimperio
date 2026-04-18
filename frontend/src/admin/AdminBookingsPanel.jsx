@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '@/config/api';
+import api from '@/utils/apiRequest';
 import { handleApiError, showSuccess } from '@/utils/toast';
 import './AdminPanel.css';
 
@@ -18,12 +18,18 @@ const AdminBookingsPanel = () => {
     setLoading(true);
     setError('');
     try {
-      const params = {};
-      if (filterStatus) params.status = filterStatus;
-      if (searchTerm) params.search = searchTerm;
+      let endpoint = '/api/admin/bookings';
+      const params = new URLSearchParams();
+      
+      if (filterStatus) params.append('status', filterStatus);
+      if (searchTerm) params.append('search', searchTerm);
+      
+      if (params.toString()) {
+        endpoint += '?' + params.toString();
+      }
 
-      const response = await api.get('/api/admin/bookings', { params });
-      setBookings(Array.isArray(response.data) ? response.data : []);
+      const response = await api.get(endpoint);
+      setBookings(Array.isArray(response) ? response : []);
     } catch (err) {
       handleApiError(err, 'Failed to load bookings');
       setError('Failed to load bookings');
@@ -36,7 +42,7 @@ const AdminBookingsPanel = () => {
     if (!window.confirm('Are you sure you want to cancel this booking?')) return;
 
     try {
-      await api.put(`/api/bookings/${bookingId}/cancel`);
+      await api.put(`/api/bookings/${bookingId}/cancel`, {});
       showSuccess('Booking cancelled successfully');
       fetchBookings();
     } catch (err) {

@@ -8,13 +8,15 @@
 
 **Get Room Availability**
 ```bash
-curl "http://localhost:8000/api/rooms/availability?check_in=2024-04-15&check_out=2024-04-18" \
+curl "process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/rooms/availability?check_in=2024-04-15&check_out=2024-04-18" \
   -H "Content-Type: application/json"
 ```
 
 **Create a Booking**
 ```bash
-curl -X POST http://localhost:8000/api/bookings \
+curl -X POST process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/bookings \
   -H "Content-Type: application/json" \
   -d '{
     "room_number": 101,
@@ -29,12 +31,14 @@ curl -X POST http://localhost:8000/api/bookings \
 
 **Get Booking Details**
 ```bash
-curl http://localhost:8000/api/bookings/{booking_id}
+curl process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/bookings/{booking_id}
 ```
 
 **Admin: Get All Bookings**
 ```bash
-curl http://localhost:8000/api/admin/bookings \
+curl process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/admin/bookings \
   -H "Authorization: Bearer {token}"
 ```
 
@@ -148,10 +152,12 @@ describe("Complete Booking Flow", () => {
 ### Load Testing with Apache Bench
 ```bash
 # Test booking endpoint with 100 requests, 10 concurrent
-ab -n 100 -c 10 http://localhost:8000/api/rooms
+ab -n 100 -c 10 process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/rooms
 
 # Test create booking endpoint
-ab -n 50 -c 5 -p booking.json http://localhost:8000/api/bookings
+ab -n 50 -c 5 -p booking.json process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/bookings
 ```
 
 ### Database Query Performance
@@ -271,7 +277,8 @@ npm install
 
 # Create .env file
 cat > .env << EOF
-REACT_APP_BACKEND_URL=http://localhost:8000
+REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 EOF
 
 # Run development server
@@ -358,7 +365,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      REACT_APP_BACKEND_URL: http://localhost:8000
+      REACT_APP_BACKEND_URL: process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 ```
 
 **Deploy with Docker Compose**
@@ -394,7 +402,8 @@ SMTP_PASSWORD=your-app-password
 
 **Frontend (.env)**
 ```env
-REACT_APP_BACKEND_URL=http://localhost:8000
+REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 REACT_APP_API_TIMEOUT=30000
 ```
 
@@ -466,6 +475,7 @@ F12 → Console tab
 
 For issues or questions:
 - Check [BOOKING_SYSTEM_INTEGRATION.md](./BOOKING_SYSTEM_INTEGRATION.md)
-- Review API documentation in FastAPI Swagger: http://localhost:8000/docs
+- Review API documentation in FastAPI Swagger: process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/docs
 - Check browser console for frontend errors
 - Review MongoDB logs for database issues

@@ -101,7 +101,8 @@ allow_origins=[
     frontend_url,  # From .env
     "https://bestwesternimperio.vercel.app",  # Vercel production
     "http://localhost:3000",  # Local dev
-    "http://localhost:8000",  # Local API
+    "process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"",  # Local API
     "http://127.0.0.1:3000",
     "http://127.0.0.1:8000",
 ]

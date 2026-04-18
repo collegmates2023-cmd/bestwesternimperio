@@ -45,7 +45,8 @@ app = FastAPI()
 # CORS already configured
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url, "http://localhost:3000", "http://localhost:8000"],
+    allow_origins=[frontend_url, "http://localhost:3000", "process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com""],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -196,7 +197,8 @@ Once you know your Vercel URL:
 Your `frontend/src/config/api.js` is already correctly set up:
 
 ```javascript
-const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+const API_URL = process.env.REACT_APP_BACKEND_URL || 'process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -217,7 +219,8 @@ In `backend/server.py`:
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=[frontend_url, "http://localhost:3000", "http://localhost:8000"],
+    allow_origins=[frontend_url, "http://localhost:3000", "process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com""],
     allow_methods=["*"],
     allow_headers=["*"],
 )

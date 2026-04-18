@@ -17,7 +17,8 @@
 ### 1. Frontend Environment Configuration
 ✅ Created `frontend/.env` with:
 ```
-REACT_APP_BACKEND_URL=http://localhost:8000
+REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 ```
 
 ### 2. Updated API Calls in 4 Components
@@ -29,7 +30,8 @@ REACT_APP_BACKEND_URL=http://localhost:8000
 ### 3. Enhanced Backend CORS
 ✅ Updated `backend/server.py` to allow requests from:
 - http://localhost:3000 (React dev server)
-- http://localhost:8000 (Backend origin)
+- process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com" (Backend origin)
 
 ---
 
@@ -40,7 +42,8 @@ REACT_APP_BACKEND_URL=http://localhost:8000
 cd backend
 uvicorn server:app --reload --port 8000
 ```
-✅ Backend running on http://localhost:8000
+✅ Backend running on process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 
 ### Terminal 2 - Start Frontend
 ```bash
@@ -97,7 +100,8 @@ npm start
 **Step 1:** Verify backend is running
 ```bash
 # In new terminal, test backend
-curl http://localhost:8000/api/rooms
+curl process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/rooms
 # Should return JSON with room data
 ```
 
@@ -105,7 +109,8 @@ curl http://localhost:8000/api/rooms
 ```bash
 # Check file exists and has correct content
 cat frontend/.env
-# Should show: REACT_APP_BACKEND_URL=http://localhost:8000
+# Should show: REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 ```
 
 **Step 3:** Restart React dev server

@@ -16,7 +16,8 @@ Frontend components were making API calls to **relative URLs** like `/api/bookin
 ### 1. Created Frontend Environment Configuration
 **File:** `frontend/.env`
 ```env
-REACT_APP_BACKEND_URL=http://localhost:8000
+REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 ```
 
 This tells the React app where the backend API is located.
@@ -48,15 +49,18 @@ This tells the React app where the backend API is located.
 ### 3. Enhanced Backend CORS Configuration
 **File:** `backend/server.py` (CORS Middleware)
 
-**Updated:** Added `http://localhost:8000` to allowed origins
+**Updated:** Added `process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"` to allowed origins
 ```python
-allow_origins=[frontend_url, "http://localhost:3000", "http://localhost:8000"]
+allow_origins=[frontend_url, "http://localhost:3000", "process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com""]
 ```
 
 This allows:
 - ✅ Production domain (from `FRONTEND_URL` env var)
 - ✅ React dev server (`http://localhost:3000`)
-- ✅ Backend development server (`http://localhost:8000`)
+- ✅ Backend development server (`process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"`)
 
 ### 4. Created .env.example Files
 - **backend/.env.example** - Shows required backend configuration
@@ -88,7 +92,8 @@ cat .env
 uvicorn server:app --reload --host 0.0.0.0 --port 8000
 ```
 
-✅ Backend should be running on `http://localhost:8000`
+✅ Backend should be running on `process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"`
 
 ### Step 2: Setup Frontend
 
@@ -204,7 +209,8 @@ Admin pages using `adminApi` (AuthContext) also use the BACKEND_URL:
 1. Is backend running on port 8000?
    ```bash
    # In new terminal
-   curl http://localhost:8000/api/rooms
+   curl process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/rooms
    ```
    Should return JSON response ✅
 
@@ -212,7 +218,8 @@ Admin pages using `adminApi` (AuthContext) also use the BACKEND_URL:
    ```bash
    # Check frontend/.env
    cat frontend/.env
-   # Should show: REACT_APP_BACKEND_URL=http://localhost:8000
+   # Should show: REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
    ```
 
 3. Restart React dev server after creating .env:
@@ -224,7 +231,8 @@ Admin pages using `adminApi` (AuthContext) also use the BACKEND_URL:
 
 **Solution:** Backend now allows these origins:
 - ✅ http://localhost:3000 (React dev)
-- ✅ http://localhost:8000 (Backend origin)
+- ✅ process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com" (Backend origin)
 - ✅ Your production domain (from FRONTEND_URL env var)
 
 If you still see CORS errors, verify backend/server.py has the updated CORS middleware.
@@ -241,7 +249,8 @@ If you still see CORS errors, verify backend/server.py has the updated CORS midd
 **Check:**
 1. Backend auth endpoints working:
    ```bash
-   curl -X POST http://localhost:8000/api/auth/login \
+   curl -X POST process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/auth/login \
      -H "Content-Type: application/json" \
      -d '{"email": "admin@hotel.com", "password": "123456"}'
    ```
@@ -307,7 +316,8 @@ When deploying to production:
 - [ ] Admin login works with demo credentials
 - [ ] Admin panel pages load data
 - [ ] Browser console shows no CORS errors
-- [ ] Network tab shows API calls to http://localhost:8000
+- [ ] Network tab shows API calls to process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 
 ---
 

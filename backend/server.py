@@ -108,6 +108,23 @@ def serialize_doc(doc):
     doc["id"] = str(doc.pop("_id"))
     return doc
 
+# ─── Root Route ───
+@app.get("/")
+async def root():
+    return {"message": "Best Western Imperio API - Server is running"}
+
+@app.get("/api/rooms")
+async def get_available_rooms(floor: Optional[int] = None, category: Optional[str] = None):
+    """Public endpoint to view available rooms"""
+    query = {"status": "available"}
+    if floor:
+        query["floor"] = floor
+    if category:
+        query["category"] = category
+    
+    rooms = await db["rooms"].find(query).to_list(None)
+    return {"rooms": [serialize_doc(r) for r in rooms], "total": len(rooms)}
+
 # ─── Auth Routes ───
 @api_router.post("/auth/login")
 async def login(input_data: LoginInput, request: Request, response: Response):
@@ -621,7 +638,7 @@ app.add_middleware(
         frontend_url, 
         "https://bestwesternimperio.vercel.app",  # Vercel production
         "http://localhost:3000",  # Local development
-        "http://localhost:8000",  # Local API
+        "https://bestwesternimperio-1.onrender.com",  # Local API
         "http://127.0.0.1:3000",
         "http://127.0.0.1:8000",
     ],

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '@/config/api';
+import api from '@/utils/apiRequest';
 import { handleApiError, showSuccess } from '@/utils/toast';
 import './AdminPanel.css';
 
@@ -28,13 +28,19 @@ const AdminRoomsPanel = () => {
     setLoading(true);
     setError('');
     try {
-      const params = {};
-      if (filterFloor) params.floor = filterFloor;
-      if (filterStatus) params.status = filterStatus;
-      if (filterCategory) params.category = filterCategory;
+      let endpoint = '/api/admin/rooms';
+      const params = new URLSearchParams();
+      
+      if (filterFloor) params.append('floor', filterFloor);
+      if (filterStatus) params.append('status', filterStatus);
+      if (filterCategory) params.append('category', filterCategory);
+      
+      if (params.toString()) {
+        endpoint += '?' + params.toString();
+      }
 
-      const response = await api.get('/api/admin/rooms', { params });
-      setRooms(Array.isArray(response.data) ? response.data : []);
+      const response = await api.get(endpoint);
+      setRooms(Array.isArray(response) ? response : []);
     } catch (err) {
       handleApiError(err, 'Failed to load rooms');
       setError('Failed to load rooms');

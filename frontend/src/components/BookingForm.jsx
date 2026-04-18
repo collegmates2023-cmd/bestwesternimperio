@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from '@/config/api';
+import api from '@/utils/apiRequest';
 import { handleApiError, showSuccess } from '@/utils/toast';
 import './BookingForm.css';
 
@@ -68,8 +68,7 @@ const BookingForm = ({ room, checkIn, checkOut, onBookingSubmit, onClose }) => {
       };
 
       console.log('📤 Booking Data:', bookingData);
-      const response = await api.post('/api/bookings', bookingData);
-      const data = response.data;
+      const data = await api.post('/api/bookings', bookingData);
       
       console.log('✅ Booking Response:', data);
       

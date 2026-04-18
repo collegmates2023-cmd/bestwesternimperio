@@ -384,7 +384,8 @@ npm install
 **Configure API endpoint (optional):**
 ```bash
 # Create .env file
-REACT_APP_BACKEND_URL=http://localhost:8000
+REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 ```
 
 **Run frontend:**
@@ -475,7 +476,8 @@ useEffect(() => {
 ### Option 2: WebSockets (Advanced)
 ```jsx
 useEffect(() => {
-  const socket = io('http://localhost:8000');
+  const socket = io('process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"');
   
   socket.on('room_status_changed', (roomData) => {
     updateRoomInState(roomData);

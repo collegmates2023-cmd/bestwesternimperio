@@ -15,7 +15,8 @@
 ### 1. Environment Configuration
 **File:** `frontend/.env`
 ```env
-REACT_APP_BACKEND_URL=http://localhost:8000
+REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 ```
 
 ### 2. Centralized API Module
@@ -23,7 +24,8 @@ REACT_APP_BACKEND_URL=http://localhost:8000
 ```javascript
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+const API_URL = process.env.REACT_APP_BACKEND_URL || 'process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -37,7 +39,8 @@ export { API_URL, api as default };
 ```
 
 **Key Features:**
-- ✅ Fallback to `http://localhost:8000` if env var undefined
+- ✅ Fallback to `process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"` if env var undefined
 - ✅ Axios instance with auto-configured baseURL
 - ✅ Request/response logging for debugging
 - ✅ Credentials support for JWT cookies
@@ -89,7 +92,8 @@ const res = await axios.get(`${BACKEND_URL}/api/rooms`);
 ```javascript
 import api from '@/config/api';
 const res = await api.get('/api/rooms');
-// Results in: GET http://localhost:8000/api/rooms 200
+// Results in: GET process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/rooms 200
 ```
 
 ### How Parameters Work
@@ -126,7 +130,8 @@ When requests are made, you'll see in browser console:
 
 ```
 🔌 API Configuration:
-API Base URL: http://localhost:8000
+API Base URL: process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 Environment: development
 
 📤 API Request: GET /api/rooms
@@ -163,7 +168,8 @@ try {
 ### Development
 **File:** `frontend/.env`
 ```env
-REACT_APP_BACKEND_URL=http://localhost:8000
+REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 ```
 
 ### Production
@@ -191,7 +197,8 @@ The api config automatically uses the appropriate value based on build environme
 
 ## Verification Checklist
 
-- [x] `frontend/.env` has `REACT_APP_BACKEND_URL=http://localhost:8000`
+- [x] `frontend/.env` has `REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"`
 - [x] `frontend/src/config/api.js` created with axios instance
 - [x] All components import from `@/config/api`
 - [x] No hardcoded API URLs in components
@@ -225,7 +232,8 @@ npm start
 Open browser DevTools Console (F12) and look for:
 ```
 🔌 API Configuration:
-API Base URL: http://localhost:8000
+API Base URL: process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 Environment: development
 ```
 
@@ -246,7 +254,8 @@ You should see in console:
 
 Open DevTools Network tab and check:
 - No requests to `/undefined/api/...`
-- All requests go to `http://localhost:8000/api/...`
+- All requests go to `process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/...`
 - Response status 200/201 for successful calls
 
 ---
@@ -277,7 +286,8 @@ All components have been migrated to the new way.
 
 **Solution:**
 1. Check `.env` file exists in `frontend/` directory
-2. Verify it contains `REACT_APP_BACKEND_URL=http://localhost:8000`
+2. Verify it contains `REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"`
 3. Restart npm dev server: `npm start`
 
 ### Still Getting `/undefined/api/...` Errors
@@ -300,7 +310,8 @@ All components have been migrated to the new way.
 # In backend/server.py
 allow_origins=[
   "http://localhost:3000",  # React dev
-  "http://localhost:8000",  # Backend origin
+  "process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"",  # Backend origin
   frontend_url              # Production
 ]
 ```

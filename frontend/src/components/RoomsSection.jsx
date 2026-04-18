@@ -2,13 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Wifi, Wind, Coffee, Tv, Bath, BedDouble, Maximize2, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-<<<<<<< HEAD
-import api from "@/config/api";
-=======
-import axios from "axios";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
->>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
+import api from "@/utils/apiRequest";
 
 const amenityIcons = {
   "King Bed": BedDouble,
@@ -29,12 +23,8 @@ export default function RoomsSection() {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-<<<<<<< HEAD
         const res = await api.get('/api/rooms');
-=======
-        const res = await axios.get(`${BACKEND_URL}/api/rooms`);
->>>>>>> 13412ab8749f8fc6a70ea46c62b0613254000ca4
-        setRooms(res.data.rooms);
+        setRooms(res.rooms);
       } catch {
         setRooms([
           {

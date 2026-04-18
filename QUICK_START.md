@@ -47,7 +47,8 @@ python -m venv .venv
 pip install -r requirements.txt
 uvicorn server:app --reload
 ```
-✅ Backend running at http://localhost:8000
+✅ Backend running at process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 
 ### Step 3: Start Frontend
 ```bash
@@ -70,7 +71,8 @@ npm start
 
 **Via API (optional):**
 ```bash
-curl "http://localhost:8000/api/rooms/availability?check_in=2024-04-15&check_out=2024-04-18"
+curl "process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/api/rooms/availability?check_in=2024-04-15&check_out=2024-04-18"
 ```
 
 ---
@@ -178,7 +180,8 @@ FRONTEND_URL=http://localhost:3000
 
 ### Frontend Environment Variables (.env)
 ```env
-REACT_APP_BACKEND_URL=http://localhost:8000
+REACT_APP_BACKEND_URL=process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"
 ```
 
 ---
@@ -322,7 +325,8 @@ PUT /api/admin/rooms/507f1f77bcf86cd799439011/status
 
 ## Support Resources
 
-1. **API Documentation**: http://localhost:8000/docs (Swagger UI)
+1. **API Documentation**: process.env.REACT_APP_BACKEND_URL ||
+  "https://bestwesternimperio-1.onrender.com"/docs (Swagger UI)
 2. **Database**: MongoDB Compass for visual inspection
 3. **Browser DevTools**: F12 for frontend debugging
 4. **Logs**: Check terminal output for errors

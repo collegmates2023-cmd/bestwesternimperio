@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '@/config/api';
+import api from '@/utils/apiRequest';
 import './FloorComponent.css';
 
 const FloorComponent = ({ checkIn, checkOut, onRoomSelected, loading = false }) => {
@@ -18,11 +18,8 @@ const FloorComponent = ({ checkIn, checkOut, onRoomSelected, loading = false }) 
     setLoadingFloors(true);
     setError('');
     try {
-      const response = await api.get('/api/rooms/availability', {
-        params: { check_in: checkIn, check_out: checkOut }
-      });
-
-      const data = response.data;
+      const endpoint = `/api/rooms/availability?check_in=${checkIn}&check_out=${checkOut}`;
+      const data = await api.get(endpoint);
       
       if (!data) {
         throw new Error('Failed to fetch room availability');
